@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% block body %}
+<div>
+
+
+    <h3>Add A New Job Application</h3>
+    
+    <form method="POST" action="{{ url_for('add_job') }}">
+
+        {{ form.scrf_token }}
+        {{ form.company_name.label }} {{ form.company_name(size=20) }}
+        {{ form.job_title.label }} {{ form.job_title(size=20) }}
+
+        <input type="submit" value="Add Job">
+
+    </form>
+</div>
+{% endblock %}	
