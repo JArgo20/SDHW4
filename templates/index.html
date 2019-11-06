@@ -3,7 +3,26 @@
 {% extends 'base.html' %} 
 
 {% block body %}
-		
-    hello world
+<p><a href="{{ url_for('.add_job')}}"> Add a new job </a></p>
+{% if jobs %}
+	<table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Company Name</th>
+                <th>Job Title</th>
+            </tr>
+        </thead>
 
+        <tbody>
+            {% for row in jobs %}
+            <tr>
+                <td> {{ row.jobId }} </td>
+                <td> {{ row.company_name }} </td>
+                <td> {{ row.job_title }} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>	
+{% endif %}
 {% endblock %}		
