@@ -8,10 +8,10 @@ import pymysql
 #import secrets
 import os
 
-dbuser = os.environment.get('DBUSER')
-dbpass = os.environment.get('DBPASS')
-dbhost = os.environment.get('DBHOST')
-dbname = os.environment.get('DBNAME')
+dbuser = os.environ.get('DBUSER')
+dbpass = os.environ.get('DBPASS')
+dbhost = os.environ.get('DBHOST')
+dbname = os.environ.get('DBNAME')
 
 #conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
 conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
