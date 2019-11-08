@@ -44,7 +44,8 @@ def index():
 @app.route('/add_job', methods=['GET', 'POST'])
 def add_job():
     form = JobForm()
-    if form.validate_on_submit():
+    #if form.validate_on_submit():
+    if request.method == 'POST':
         job = jargo_jobapp(company_name=form.company_name.data, job_title=form.job_title.data)
         db.session.add(job)
         db.session.commit()
