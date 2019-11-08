@@ -20,6 +20,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY']='SuperSecretKey'
 app.config['SQLALCHEMY_DATABASE_URI'] = conn
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
 class jargo_jobapp(db.Model):
@@ -28,7 +29,7 @@ class jargo_jobapp(db.Model):
     job_title = db.Column(db.String(255))
 
     def __repr__(self):
-        return "id: {0} | Company Name: {1} | Job Title: {2}".format(self.id, self.company_name, self.job_title)
+        return "jobId: {0} | Company Name: {1} | Job Title: {2}".format(self.id, self.company_name, self.job_title)
 
 class JobForm(FlaskForm):
     company_name = StringField('Company Name:', validators=[DataRequired()])
@@ -50,3 +51,34 @@ def add_job():
         return redirect('/')
     
     return render_template('add_job.html', form=form, pageTitle='Add a New Job')
+
+@app.route('/job/<int:jobId>', methods=['GET','POST'])
+def job(jobId):
+    job = jargo_jobapp.query.get_or_404(jobId)
+    return render_template('job.html', form=job, pageTitle='Job Information')
+
+@app.route('/job/<int:jobId>/update', methods=['GET','POST'])
+def update_job(jobId):
+    job = jargo_jobapp.query.get_or_404(jobId)
+    form = JobForm()
+    if form.validate_on_submit():
+        job.company_name = form.company_name.data
+        job.job_title = form.job_title.data
+        db.session.commit()
+        flash('Job information has been updated.')
+        return redirect(url_for('job', jobId=job.jobId))
+    form.company_name.data = job.company_name
+    form.job_title.data = job.job_title
+    return render_template('add_job.html', form=form, pageTitle='Update Post',
+                            legend="Update A job")
+
+@app.route('/friend/<int:jobId>/delete', methods=['POST'])
+def delete_job(jobId):
+    if request.method == 'POST': 
+        job = jargo_jobapp.query.get_or_404(jobId)
+        db.session.delete(job)
+        db.session.commit()
+        flash('Job was successfully deleted!')
+        return redirect("/")
+    else: 
+        return redirect("/")
