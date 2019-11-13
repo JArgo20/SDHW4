@@ -1,20 +1,20 @@
 from flask import Flask
 from flask import render_template, request, redirect, flash, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, Form, SelectField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
-#import secrets
-import os
+import secrets
+#import os
 
-dbuser = os.environ.get('DBUSER')
-dbpass = os.environ.get('DBPASS')
-dbhost = os.environ.get('DBHOST')
-dbname = os.environ.get('DBNAME')
+#dbuser = os.environ.get('DBUSER')
+#dbpass = os.environ.get('DBPASS')
+#dbhost = os.environ.get('DBHOST')
+#dbname = os.environ.get('DBNAME')
 
-#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
-conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
+conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
 
 app = Flask(__name__)
 app.config['SECRET_KEY']='SuperSecretKey'
@@ -39,6 +39,9 @@ class JobForm(FlaskForm):
 @app.route('/')
 def index():
     all_jobs = jargo_jobapp.query.all()
+    #search = JobForm(request.form)
+    #if request.method == 'POST':
+        #return search_results(search)
     return render_template('index.html', jobs=all_jobs, pageTitle='Josiahs Job Applications')
 
 @app.route('/add_job', methods=['GET', 'POST'])
@@ -72,6 +75,13 @@ def update_job(jobId):
     form.job_title.data = job.job_title
     return render_template('add_job.html', form=form, pageTitle='Update Post',
                             legend="Update A job")
+
+#@app.route('/search/<int:jobId>', methods=['GET','POST'])
+#def search_job(jobId):
+    #if request.method == 'POST': 
+        #job = jargo_jobapp.query.get_or_404(jobId)
+        #db.session.search(job)
+        #db.session.commit()
 
 @app.route('/friend/<int:jobId>/delete', methods=['POST'])
 def delete_job(jobId):

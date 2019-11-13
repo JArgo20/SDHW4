@@ -19,19 +19,28 @@
 
 
 {% if form %}
+<table>
+    
+    <tbody>
+
   <form method="POST">
 
     {{ form.csrf_token }}
+    
+    <tr><td><b>Job ID:</b> {{ form.jobId }}</td></tr>
+    <tr><td><b>Company:</b> {{ form.company_name.label }} {{ form.company_name }}</td></tr>
+    <tr><td><b>Job Title:</b> {{ form.job_title.label }} {{ form.job_title }}</td></tr>
 
-    {{ form.company_name.label }} {{ form.company_name }}
-    {{ form.job_title.label }} {{ form.job_title }}
 
+    
+    <tr><td>
     <input type="submit" formaction="{{url_for('update_job', jobId=form.jobId)}}" value="Update">
     <input type="submit" formaction="{{url_for('delete_job', jobId=form.jobId)}}" value="Delete">
-
-
+    </td>
+</tbody>
 
   </form>
+</table>
 {% endif %}
 </div>
 {% endblock %}
