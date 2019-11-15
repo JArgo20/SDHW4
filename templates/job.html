@@ -26,10 +26,9 @@
   <form method="POST">
 
     {{ form.csrf_token }}
-    
-    <tr><td><b>Job ID:</b> {{ form.jobId }}</td></tr>
-    <tr><td><b>Company:</b> {{ form.company_name.label }} {{ form.company_name }}</td></tr>
-    <tr><td><b>Job Title:</b> {{ form.job_title.label }} {{ form.job_title }}</td></tr>
+    {{ form.jobId.label }} {{ form.jobId }}
+    {{ form.company_name.label }} {{ form.company_name }}
+    {{ form.job_title.label }} {{ form.job_title }}
 
 
     
