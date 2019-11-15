@@ -9,6 +9,7 @@
   <input type="submit" formaction="/search" value="Search">
 </form>
 
+<p><a href="{{ url_for('index')}}"> Home </a></p>
 <p><a href="{{ url_for('.add_job')}}"> Add a new job </a></p>
 
 {% with messages = get_flashed_messages() %}

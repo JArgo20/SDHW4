@@ -3,7 +3,8 @@ from flask import render_template, request, redirect, flash, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, Form, SelectField, IntegerField
 from wtforms.validators import DataRequired
-from flask_sqlalchemy import SQLAlchemy, or_
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 import pymysql
 import secrets
 #import os
